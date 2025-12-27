@@ -1,0 +1,41 @@
+# ---------- Logs ----------
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ---------- Node ----------
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# ---------- Python ----------
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+
+# ---------- ML / Torch / HF ----------
+.cache/
+torch_cache/
+huggingface/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+
+# ---------- OS / Editors ----------
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

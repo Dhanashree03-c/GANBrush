@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  /* Default to dark background to prevent flashing */
+  background-color: #050314; 
+}
+
+/* --- ADAPTIVE PANEL (Works for Light & Dark) --- */
+.app-panel {
+  @apply transition-all duration-300 ease-in-out border rounded-3xl;
+}
+
+/* Dark Mode Styles (Cosmic) */
+.dark .app-panel {
+  background: rgba(15, 10, 35, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-color: rgba(168, 85, 247, 0.3);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(168, 85, 247, 0.1);
+}
+
+/* Light Mode Styles (Studio) */
+.light .app-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), inset 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+/* --- BUTTONS --- */
+.primary-btn {
+  @apply px-6 py-3 rounded-full font-bold text-sm flex items-center gap-2 transition-all shadow-lg;
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  color: white;
+}
+.primary-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(236, 72, 153, 0.6);
+}
+.primary-btn:disabled {
+  opacity: 0.5;
+  filter: grayscale(100%);
+  cursor: not-allowed;
+}
+
+/* --- SLIDER --- */
+input[type="range"] {
+  -webkit-appearance: none;
+  background: transparent;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #ec4899;
+  cursor: pointer;
+  margin-top: -6px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  @apply rounded-full bg-gray-300 dark:bg-purple-900/40;
+}
