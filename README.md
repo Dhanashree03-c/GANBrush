@@ -26,17 +26,6 @@ GANBrush is a web-based image generation application built using **FastAPI**, **
 * Node.js (for frontend)
 * CUDA Toolkit (only if GPU acceleration is required)
 
-## Project Structure
-
-GANBrush/
-│
-├── server.py          # FastAPI backend
-├── requirements.txt   # Python dependencies
-├── venv/              # Python virtual environment
-├── frontend/          # React UI
-└── README.md
-```
-
 ## Step-by-Step Setup Instructions
 
 ### 1. Clone the Repository
@@ -47,15 +36,14 @@ cd GANBrush
 ```
 
 ### 2. Create & Activate Virtual Environment
-
-**Windows (PowerShell):**
+# Windows (PowerShell):
 
 ```powershell
 python -m venv venv
 venv\Scripts\activate
 ```
 
-**Linux / macOS:**
+# Linux / macOS:
 
 ```bash
 python3 -m venv venv
