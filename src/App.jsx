@@ -102,6 +102,10 @@ export default function App() {
     const canvas = fabricCanvasRef.current;
     if (!canvas) return null;
 
+    if (canvas.getObjects().length === 0){
+      return null;
+    }
+
     canvas.backgroundColor = "#ffffff";
     canvas.renderAll();
 
@@ -119,17 +123,22 @@ export default function App() {
     const sketchBase64 = exportSketch();
 
     if (!sketchBase64) {
-      alert("Please draw something first");
+      alert("Please draw something!");
       setIsGenerating(false);
       return;
     }
+
+    const finalPrompt = 
+      prompt?.trim().length > 0
+        ? `${prompt}, ${selectedStyle} style, ultra detailed, realistic lighting`
+        : `${selectedStyle} style, ultra detailed, realistic lighting`;
 
     // Call your backend API
     const response = await fetch("http://localhost:8000/generate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        prompt: `${prompt}, ${selectedStyle} style, ultra detailed, realistic lighting`,
+        prompt: finalPrompt,
         image: sketchBase64
       })
     });
