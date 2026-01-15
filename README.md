@@ -1,30 +1,27 @@
-Below is a clean, professional **README.md** you can directly place in your repository.
-It is written assuming your current setup (FastAPI + Uvicorn + Diffusers + ControlNet) and **handles the RTX 2050 / CPU fallback correctly**, including the issue you encountered with `enable_sequential_cpu_offload`.
-# GANBrush – ControlNet Image Generation Web App
 
-GANBrush is a web-based image generation application built using **FastAPI**, **Stable Diffusion + ControlNet**, and a **React-based UI**. It allows users to upload an input image (e.g., sketch/line art) and generate realistic images based on a text prompt.
+GANBrush is a web-based image generation application built using FastAPI, Stable Diffusion + ControlNet, and a React-based UI. It allows users to sketch and generate a realistic image with the help of prompt to specify the context of the iamge.
 
 ## Tech Stack
 
-* **Backend**: FastAPI, Uvicorn
-* **ML Framework**: PyTorch, Diffusers, ControlNet
-* **Frontend**: React
-* **Model**: Stable Diffusion + ControlNet
-* **Hardware**: NVIDIA RTX 2050 (GPU optional, CPU fallback supported)
+ - Backend: FastAPI, Uvicorn
+ - ML Framework: PyTorch, Diffusers, ControlNet
+ - Frontend: React
+ - Model: Stable Diffusion + ControlNet
+ - Hardware: NVIDIA RTX 2050 (GPU optional, CPU fallback supported)
 
 ## System Requirements
 
 ### Hardware
 
-* NVIDIA GPU (RTX 2050 recommended)
-* Minimum 8 GB RAM (16 GB recommended)
+- NVIDIA GPU (RTX 2050 recommended)
+- Minimum 8 GB RAM (16 GB recommended)
 
 ### Software
 
-* Python **3.9 or 3.10**
-* Git
-* Node.js (for frontend)
-* CUDA Toolkit (only if GPU acceleration is required)
+- Python 3.9 or 3.10
+- Git
+- Node.js (for frontend)
+- CUDA Toolkit (only if GPU acceleration is required)
 
 ## Step-by-Step Setup Instructions
 
@@ -127,10 +124,10 @@ http://localhost:3000
 | RTX 2050 + CUDA detected | Runs on GPU (fast)            |
 | CUDA not detected        | Runs on CPU (slow but stable) |
 
-CPU inference may take **3–5 minutes per image**, which is expected.
+CPU inference may take 3–5 minutes per image, which is expected.
 
 ## Notes
 
 * Safety checker is disabled for development use only.
-* Do **not** expose the backend publicly without content moderation.
+* Do not expose the backend publicly without content moderation.
 * Large models may take time to load during first request.
