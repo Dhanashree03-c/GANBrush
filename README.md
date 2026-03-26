@@ -131,3 +131,8 @@ CPU inference may take 3–5 minutes per image, which is expected.
 * Safety checker is disabled for development use only.
 * Do not expose the backend publicly without content moderation.
 * Large models may take time to load during first request.
+
+## Author of the project
+**Dhanashree Tankar**
+**Aradhana Shri*vastav**
+**Anish Shinde**
