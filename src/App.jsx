@@ -26,6 +26,7 @@ export default function App() {
   const [prompt, setPrompt] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedImage, setGeneratedImage] = useState(null);
+  const [showStyles, setShowStyles] = useState(false);
 
   const toggleTheme = () => setIsDarkMode(!isDarkMode);
 
@@ -163,6 +164,17 @@ export default function App() {
   }
 };
 
+const downloadImage = () => {
+  if (!generatedImage) return;
+
+  const link = document.createElement("a");
+  link.href = generatedImage;
+  link.download = "ganbrush-image.png"; 
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
   return (
     <div className={`${isDarkMode ? 'dark' : 'light'} h-screen w-full transition-colors duration-500`}>
       <div 
@@ -172,7 +184,7 @@ export default function App() {
         <div className="absolute inset-0 bg-white/40 dark:bg-[#050314]/50 backdrop-blur-[1px] pointer-events-none transition-colors duration-500"></div>
 
         {/* --- HEADER --- */}
-        <header className="relative z-10 px-6 py-3 flex items-center justify-between flex-shrink-0">
+        <header className="relative z-50 px-6 py-3 flex items-center justify-between flex-shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg text-white">
               <Sparkles size={20}/>
@@ -185,13 +197,51 @@ export default function App() {
               {isDarkMode ? <Sun size={20} className="text-yellow-300"/> : <Moon size={20} className="text-indigo-600"/>}
             </button>
 
-            <div className="hidden md:flex gap-2 p-1 app-panel !rounded-full !bg-black/5 dark:!bg-black/40">
-              {STYLES.slice(0, 3).map(s => (
-                <button key={s} onClick={()=>setSelectedStyle(s)} className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${selectedStyle === s ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-md' : 'text-gray-500 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10'}`}>
-                  {s}
+            <div className="hidden md:flex gap-2 p-1 app-panel !rounded-full !bg-black/5 dark:!bg-black/40 relative">
+              {STYLES.slice(0, 3).map((s) => {
+                const isActive = selectedStyle === s;
+                
+                return (
+                  <button 
+                    key={s} onClick={()=>setSelectedStyle(s)} 
+                    className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
+                      isActive 
+                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-md"
+                        : "text-gray-500 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10"
+                    }`}>
+                    {s}
+                  </button>
+                );
+              })}
+
+              {!STYLES.slice(0,3).includes(selectedStyle) && (
+                <button
+                  className="px-4 py-1.5 rounded-full text-xs font-medium bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-md">
+                  {selectedStyle}
                 </button>
-              ))}
-              <button className="px-2 text-gray-400"><ChevronDown size={16}/></button>
+              )}
+                <div className="relative">
+                  <button
+                      onClick={() => setShowStyles(!showStyles)}
+                      className="px-2 text-gray-400 hover:text-gray-700 dark:hover:text-white">
+                      <ChevronDown size={16}/>
+                  </button>
+                  {showStyles && (
+                    <div className="absolute top-full right-0 mt-2 bg-white dark:bg-black/80 shadow-lg rounded-xl p-2 flex flex-col gap-1 z-[100]">
+                      {STYLES.slice(3).map((s) => (
+                        <button
+                          key={s}
+                          onClick={() => {
+                            setSelectedStyle(s);
+                            setShowStyles(false);
+                          }}
+                          className="px-3 py-1 text-sm hover:bg-gray-100 dark:hover:bg-white/10 rounded-md">
+                          {s}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
             </div>
           </div>
         </header>
@@ -240,7 +290,6 @@ export default function App() {
           <aside className="w-[400px] lg:w-[450px] xl:w-[500px] flex-shrink-0 app-panel p-6 flex flex-col gap-4 overflow-auto">
             <div className="flex justify-between items-center text-sm font-semibold opacity-70">
               <h3>Generated Result</h3>
-              <Settings size={18} className="cursor-pointer hover:opacity-100"/>
             </div>
 
             <div className="w-full aspect-portrait rounded-2xl overflow-hidden relative group bg-black/5 dark:bg-black/30 border border-gray-200 dark:border-white/10 flex items-center justify-center shadow-inner">
@@ -248,7 +297,8 @@ export default function App() {
                 <>
                   <img src={generatedImage} className="w-full h-full object-cover" alt="AI Art" />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3 backdrop-blur-sm">
-                    <button className="p-4 bg-white rounded-full hover:scale-110 transition shadow-lg"><Download size={24} className="text-black"/></button>
+                    <button onClick={downloadImage} className="p-4 bg-white rounded-full hover:scale-110 transition shadow-lg">
+                        <Download size={24} className="text-black"/></button>
                   </div>
                 </>
               ) : (
@@ -260,7 +310,7 @@ export default function App() {
             </div>
 
             <div className="grid grid-cols-2 gap-4 mt-auto">
-              <button className="py-4 rounded-xl border border-gray-300 dark:border-white/10 hover:bg-gray-100 dark:hover:bg-white/5 text-xs font-bold transition flex items-center justify-center gap-2">
+              <button onClick={downloadImage} className="py-4 rounded-xl border border-gray-300 dark:border-white/10 hover:bg-gray-100 dark:hover:bg-white/5 text-xs font-bold transition flex items-center justify-center gap-2">
                 <Download size={16}/> Save
               </button>
               <button onClick={handleGenerate} disabled={isGenerating} className="primary-btn justify-center">
